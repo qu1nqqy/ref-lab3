@@ -52,9 +52,9 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
     return {"msg": "welcome", "user_id": u.id}
 
 @app.get("/prods")
-def g():
+def g(lim: int, off: int):
     db = Session()
-    return db.query(P).all()
+    return db.query(P).offset(off).limit(lim).all()
 
 @app.post("/add")
 def a(n: str, d: str, c: float):
@@ -73,6 +73,6 @@ def b(u: int, p: int, q: int):
     return {"msg": "bought"}
 
 @app.get("/orders")
-def o(uid: int):
+def o(uid: int, lim: int, off: int):
     db = Session()
-    return db.query(O).filter(O.uid == uid).all()
+    return db.query(O).filter(O.uid == uid).offset(off).limit(lim).all()
